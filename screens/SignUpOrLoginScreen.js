@@ -6,15 +6,19 @@ export default function SignUpOrLoginScreen({ navigation }) {
     <View style={styles.container}>
       <Text style={styles.headerText}>APP NAME</Text>
       <View style={styles.locationMessage}>
-        <Button
-          title="Sign Up"
-          color="#5cb85c"
-          onPress={() => navigation.navigate("SignUpScreen")}
-        />
-        <Button
-          title="Log in"
-          onPress={() => navigation.navigate("LogInScreen")}
-        />
+        <View style={styles.button}>
+          <Button
+            title="Sign Up"
+            color="#5cb85c"
+            onPress={() => navigation.navigate("SignUpScreen")}
+          />
+        </View>
+        <View>
+          <Button
+            title="Log in"
+            onPress={() => navigation.navigate("LogInScreen")}
+          />
+        </View>
       </View>
     </View>
   );
@@ -43,5 +47,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: "#5cb85c",
     fontWeight: "bold",
+  },
+  button: {
+    marginBottom: 20,
+    marginTop: 20,
   },
 });

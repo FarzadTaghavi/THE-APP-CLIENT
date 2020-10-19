@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Alert, Text, View, StyleSheet, Button } from "react-native";
 import * as Location from "expo-location";
+import Geocoder from "react-native-geocoding";
 
 export default function GetLocationScreen({ navigation }) {
   const [location, setLocation] = useState({});
@@ -16,9 +17,19 @@ export default function GetLocationScreen({ navigation }) {
       }
 
       let location = await Location.getCurrentPositionAsync({});
+      console.log("location", location);
       setLocation(location);
       setLong(location.coords.longitude);
       setLat(location.coords.latitude);
+
+      Geocoder.init("AIzaSyBlPuxxAyZAUv4Kw19-EMZ2YnvHiEDnCjQ");
+      Geocoder.from(4.916173, 52.333645)
+        .then((json) => {
+          var addressComponent = json.results[0].address_components[0];
+          console.log("my location: ", addressComponent);
+        })
+        .catch((error) => console.warn(error));
+      navigation.navigate("IntroScreen");
     })();
   }
 
@@ -31,16 +42,19 @@ export default function GetLocationScreen({ navigation }) {
           permissions
         </Text>
       </View>
-      <Button
-        title="Share location"
-        color="#5cb85c"
-        onPress={() => shareLocation()}
-      />
-
-      <Button
-        title="Not now"
-        onPress={() => navigation.navigate("IntroScreen")}
-      />
+      <View style={styles.buttonLocation}>
+        <Button
+          title="Share location"
+          color="#5cb85c"
+          onPress={() => shareLocation()}
+        />
+      </View>
+      <View style={styles.button}>
+        <Button
+          title="Not now"
+          onPress={() => navigation.navigate("IntroScreen")}
+        />
+      </View>
     </View>
   );
 }
@@ -68,5 +82,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: "#5cb85c",
     fontWeight: "bold",
+  },
+  buttonLocation: {
+    marginBottom: 10,
+    width: 150,
+  },
+  button: {
+    marginBottom: 20,
+    marginTop: 10,
+    width: 150,
   },
 });

@@ -9,12 +9,13 @@ export default function IntroScreen({ navigation }) {
           Order from any store in your city
         </Text>
       </View>
-
-      <Button
-        title="Next"
-        color="#5cb85c"
-        onPress={() => navigation.navigate("EndIntroScreen")}
-      />
+      <View style={styles.button}>
+        <Button
+          title="Next"
+          color="#5cb85c"
+          onPress={() => navigation.navigate("EndIntroScreen")}
+        />
+      </View>
     </View>
   );
 }
@@ -34,5 +35,10 @@ const styles = StyleSheet.create({
     width: 170,
     marginBottom: 300,
     marginTop: 250,
+  },
+  button: {
+    marginBottom: 20,
+    marginTop: 10,
+    width: 150,
   },
 });

@@ -5,9 +5,9 @@ import { STORE_TYPE_BY_CATEGORY_ID } from "../graphql/queries";
 import AsyncStorage from "@react-native-community/async-storage";
 
 export default function storeTypes({ navigation }) {
-  const [categoryId, setCategoryId] = useState(1);
-  console.log("fetched categoryId:", categoryId);
+  const [categoryId, setCategoryId] = useState(0);
 
+  // working code
   useEffect(() => {
     async function retrieveData() {
       try {
@@ -36,7 +36,7 @@ export default function storeTypes({ navigation }) {
   // store selected store type id from user
   const storeSelectedStoreTypeId = async (value) => {
     try {
-      const jsonValue = parseInt(value);
+      const jsonValue = value.toString();
       await AsyncStorage.setItem("storeTypeId", jsonValue);
     } catch (e) {
       console.log(e);

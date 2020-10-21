@@ -1,23 +1,30 @@
 import React, { useEffect } from "react";
-import { Text, View, StyleSheet, Button, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
 import { useQuery } from "@apollo/client";
 import { CATEGORIES } from "../graphql/queries";
 import AsyncStorage from "@react-native-community/async-storage";
+import Icon from "react-native-vector-icons/Ionicons";
+var { width } = Dimensions.get("window");
 
 export default function categories({ navigation }) {
   const { loading, error, data } = useQuery(CATEGORIES);
 
   function getSelectedCategoryId(id) {
     CATEGORIES;
-    console.log("selected category id:", id);
     storeSelectedCategory(id);
     navigation.navigate("StoreTypes");
   }
 
   const storeSelectedCategory = async (value) => {
     try {
-      const jsonValue = parseInt(value);
-
+      const jsonValue = value.toString();
+      console.log("jsonValue:", jsonValue);
       await AsyncStorage.setItem("categoryId", jsonValue);
     } catch (e) {
       console.log(e);
@@ -26,9 +33,37 @@ export default function categories({ navigation }) {
 
   if (data) {
     return (
-      <View style={styles.container}>
-        <View>
-          <Text style={styles.Categories}>Select a category:</Text>
+      <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: "white" }}>
+          <Icon
+            onPress={() => navigation.navigate("ProfilePage")}
+            style={{
+              top: 43,
+              left: 30,
+            }}
+            name="md-person"
+            size={38}
+            color={"grey"}
+          />
+        </View>
+        <View
+          style={{
+            flex: 6,
+            backgroundColor: "gold",
+            alignItems: "center",
+            justifyContent: "flex-start",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 22,
+              marginTop: 20,
+              marginBottom: 20,
+              fontWeight: "800",
+            }}
+          >
+            Select a category
+          </Text>
           {data.storeCategories.map((category) => {
             return (
               <TouchableOpacity
@@ -40,6 +75,7 @@ export default function categories({ navigation }) {
             );
           })}
         </View>
+        <View style={{ flex: 1.5, backgroundColor: "blue" }}></View>
       </View>
     );
   } else {
@@ -54,52 +90,21 @@ export default function categories({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 10,
-  },
-  Categories: {
-    justifyContent: "center",
-    textAlign: "center",
-    fontSize: 20,
-    width: 170,
-    marginBottom: 10,
-    marginTop: 250,
   },
   categoryCard: {
-    width: 200,
-    height: 50,
+    width: width - 20,
+    height: 70,
     margin: 10,
-    padding: 15,
-    borderWidth: 1,
+    fontSize: 22,
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderWidth: 2,
+    shadowColor: "black",
     justifyContent: "center",
     flexDirection: "column",
     textAlign: "center",
     alignItems: "center",
     borderColor: "#000",
-    borderRadius: 5,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    /* elevation: 5, */
-  },
-  /* appButtonContainer: {
-    elevation: 8,
-    backgroundColor: "#009688",
-    borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-  }, */
-  appButtonText: {
-    fontSize: 18,
-    color: "#fff",
-    fontWeight: "bold",
-    alignSelf: "center",
-    textTransform: "uppercase",
+    borderRadius: 50,
   },
 });

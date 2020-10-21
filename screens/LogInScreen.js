@@ -1,9 +1,11 @@
-import { useQuery } from "@apollo/client";
+import { useQuery, ApolloError } from "@apollo/client";
 import React, { useState } from "react";
 import { Text, View, StyleSheet, Button, Alert } from "react-native";
 import { TextInput } from "react-native-paper";
 import { LOGIN } from "../graphql/queries";
 import AsyncStorage from "@react-native-community/async-storage";
+import { parseValue } from "graphql";
+import { clockRunning } from "react-native-reanimated";
 
 export default function LogIn({ navigation }) {
   const [password, setPassword] = useState("");
@@ -15,21 +17,26 @@ export default function LogIn({ navigation }) {
     },
   });
 
+  // working code for login with validation
+
   function getData() {
     LOGIN;
-    storeData(data);
-    /*console.log("GET USER:", data);
-    console.log("FULLNAME: ", data.login.user.fullName);
-    const { fullName } = data.login.user;
-    console.log("userName: ", fullName); */
-    navigation.navigate("Categories");
+    if (data) {
+      console.log("user", data.login.user.fullName);
+      const fullName = data.login.user.fullName;
+      console.log("fullName on login", fullName);
+      storeData(fullName);
+      navigation.navigate("Categories");
+    } else {
+      Alert.alert("User not found :(");
+    }
   }
 
+  // working code for storing data in asyncstorage
   const storeData = async (data) => {
     try {
       const jsonValue = JSON.stringify(data);
-      console.log("user: ", jsonValue);
-      await AsyncStorage.setItem("user", jsonValue);
+      await AsyncStorage.setItem("fullName", jsonValue);
     } catch (e) {
       console.log(e);
     }

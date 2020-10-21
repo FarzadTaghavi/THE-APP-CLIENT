@@ -27,13 +27,13 @@ export default function allStores({ navigation }) {
     STORES_BY_TYPE_ID;
     console.log("Selected store ID: ", id);
     storeSelectedStoreId(id);
-    navigation.navigate("Products");
+    navigation.navigate("ProductCart");
   }
 
   // store selected store type id from user
   const storeSelectedStoreId = async (value) => {
     try {
-      const jsonValue = parseInt(value);
+      const jsonValue = value.toString();
       await AsyncStorage.setItem("storeId", jsonValue);
     } catch (e) {
       console.log(e);

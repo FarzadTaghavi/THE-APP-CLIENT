@@ -8,6 +8,7 @@ export default function GetLocationScreen({ navigation }) {
   const [getLong, setLong] = useState("");
   const [getLat, setLat] = useState("");
   const [errorMsg, setErrorMsg] = useState(null);
+  console.log("location: => ", location);
 
   function shareLocation() {
     (async () => {
@@ -22,13 +23,13 @@ export default function GetLocationScreen({ navigation }) {
       setLong(location.coords.longitude);
       setLat(location.coords.latitude);
 
-      Geocoder.init("AIzaSyBlPuxxAyZAUv4Kw19-EMZ2YnvHiEDnCjQ");
-      Geocoder.from(4.916173, 52.333645)
-        .then((json) => {
-          var addressComponent = json.results[0].address_components[0];
-          console.log("my location: ", addressComponent);
-        })
-        .catch((error) => console.warn(error));
+      /* Geocoder.init("AIzaSyBlPuxxAyZAUv4Kw19-EMZ2YnvHiEDnCjQ");
+          Geocoder.from(4.916173, 52.333645)
+            .then((json) => {
+              var addressComponent = json.results[0].address_components[0];
+              console.log("my location: ", addressComponent);
+            })
+            .catch((error) => console.warn(error)); */
       navigation.navigate("IntroScreen");
     })();
   }

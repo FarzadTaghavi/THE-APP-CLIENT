@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Icon from "react-native-vector-icons/Ionicons";
 import {
   Text,
   View,
@@ -6,7 +7,9 @@ import {
   Button,
   Image,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
+var { width } = Dimensions.get("window");
 import { useQuery } from "@apollo/client";
 import { PRODUCTS_BY_STORE_ID } from "../graphql/queries";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -42,7 +45,7 @@ export default function products({ navigation }) {
   // store selected store type id from user
   const storeSelectedProductId = async (value) => {
     try {
-      const jsonValue = parseInt(value);
+      const jsonValue = value.toString();
       await AsyncStorage.setItem("product", jsonValue);
     } catch (e) {
       console.log(e);
@@ -58,12 +61,12 @@ export default function products({ navigation }) {
             <Text style={styles.categoryCard} key={product.id}>
               <Text>
                 {product.name} - €{product.price}
-                {/* <Image
+                <Image
                   source={{
                     uri: store.image,
                   }}
                   style={{ width: "100%", height: 160, marginBottom: 30 }}
-                /> */}
+                />
                 <TouchableOpacity
                   title="+"
                   style={styles.button}

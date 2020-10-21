@@ -9,11 +9,25 @@ import {
 import { useQuery } from "@apollo/client";
 import { ALL_ORDERS_BY_USER_ID } from "../graphql/queries";
 import Icon from "react-native-vector-icons/Ionicons";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default function MyOrders({ navigation }) {
+  const [userId, setUserId] = useState(0);
   const { loading, error, data } = useQuery(ALL_ORDERS_BY_USER_ID, {
-    variables: { id: 1 },
+    variables: { id: userId },
   });
+
+  useEffect(() => {
+    async function retrieveData() {
+      try {
+        const id = await AsyncStorage.getItem("userId");
+        setUserId(parseInt(id));
+      } catch (error) {
+        console.log("error: ", error.message);
+      }
+    }
+    retrieveData();
+  }, []);
 
   return (
     <View style={{ flex: 1 }}>

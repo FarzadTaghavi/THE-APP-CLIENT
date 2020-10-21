@@ -5,7 +5,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 
 export default function ProfilePage({ navigation }) {
   const [getUser, setUser] = useState("");
-  console.log("initial state getUser: ", getUser);
+  //console.log("initial state getUser: ", getUser);
 
   useEffect(() => {
     async function retrieveData() {
@@ -20,7 +20,8 @@ export default function ProfilePage({ navigation }) {
   }, []);
 
   function clearStorage() {
-    navigation.navigate("Categories");
+    AsyncStorage.clear();
+    navigation.navigate("LogInScreen");
   }
 
   return (
@@ -32,7 +33,7 @@ export default function ProfilePage({ navigation }) {
             top: 43,
             left: 30,
           }}
-          name="md-person"
+          name="ios-arrow-round-back"
           size={38}
           color={"grey"}
         />
@@ -133,7 +134,7 @@ export default function ProfilePage({ navigation }) {
           <Text
             style={{
               fontSize: 18,
-              fontWeight: "600",
+
               paddingLeft: 20,
               paddingBottom: 20,
             }}
@@ -151,7 +152,7 @@ export default function ProfilePage({ navigation }) {
           <Text
             style={{
               fontSize: 32,
-              fontWeight: "600",
+
               padding: 15,
               alignSelf: "flex-end",
               position: "absolute",
@@ -172,7 +173,7 @@ export default function ProfilePage({ navigation }) {
           <Text
             style={{
               fontSize: 18,
-              fontWeight: "600",
+
               paddingLeft: 20,
             }}
           >
@@ -185,7 +186,7 @@ export default function ProfilePage({ navigation }) {
           <Text
             style={{
               fontSize: 32,
-              fontWeight: "600",
+
               padding: 15,
               alignSelf: "flex-end",
               position: "absolute",
@@ -206,7 +207,7 @@ export default function ProfilePage({ navigation }) {
           <Text
             style={{
               fontSize: 18,
-              fontWeight: "600",
+
               paddingLeft: 20,
             }}
           >
@@ -219,18 +220,13 @@ export default function ProfilePage({ navigation }) {
           <Text
             style={{
               fontSize: 32,
-              fontWeight: "600",
+
               padding: 15,
               alignSelf: "flex-end",
               position: "absolute",
             }}
           >
-            <Icon
-              onPress={() => clearStorage()}
-              name="ios-arrow-forward"
-              size={20}
-              color={"grey"}
-            />
+            <Icon name="ios-arrow-forward" size={20} color={"grey"} />
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -245,7 +241,7 @@ export default function ProfilePage({ navigation }) {
           <Text
             style={{
               fontSize: 18,
-              fontWeight: "600",
+
               paddingLeft: 20,
             }}
           >
@@ -258,7 +254,7 @@ export default function ProfilePage({ navigation }) {
           <Text
             style={{
               fontSize: 32,
-              fontWeight: "600",
+
               padding: 15,
               alignSelf: "flex-end",
               position: "absolute",
@@ -279,7 +275,7 @@ export default function ProfilePage({ navigation }) {
           <Text
             style={{
               fontSize: 18,
-              fontWeight: "600",
+
               paddingLeft: 20,
             }}
           >
@@ -292,7 +288,7 @@ export default function ProfilePage({ navigation }) {
           <Text
             style={{
               fontSize: 32,
-              fontWeight: "600",
+
               padding: 15,
               alignSelf: "flex-end",
               position: "absolute",

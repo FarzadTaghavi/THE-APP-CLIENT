@@ -13,7 +13,7 @@ import ProductCart from "./screens/ProductCart";
 import OrderDetails from "./screens/OrderDetails";
 import PaymentScreen from "./screens/PaymentScreen";
 import PaymentReceived from "./screens/PaymentReceived";
-//import TrackOrder from "./screens/TrackOrder";
+import TrackOrder from "./screens/TrackOrder";
 import ProfilePage from "./screens/ProfilePage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -66,6 +66,7 @@ export default function App() {
           <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
           <Stack.Screen name="PaymentReceived" component={PaymentReceived} />
           <Stack.Screen name="ProfilePage" component={ProfilePage} />
+          <Stack.Screen name="TrackOrder" component={TrackOrder} />
         </Stack.Navigator>
       </NavigationContainer>
     </ApolloProvider>

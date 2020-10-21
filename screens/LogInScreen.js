@@ -22,10 +22,13 @@ export default function LogIn({ navigation }) {
   function getData() {
     LOGIN;
     if (data) {
-      console.log("user", data.login.user.fullName);
       const fullName = data.login.user.fullName;
-      console.log("fullName on login", fullName);
+      //console.log("fullName fetched", fullName);
       storeData(fullName);
+
+      const id = data.login.user.id;
+      //console.log("userId fetched", id);
+      storeUserId(id);
       navigation.navigate("Categories");
     } else {
       Alert.alert("User not found :(");
@@ -37,6 +40,16 @@ export default function LogIn({ navigation }) {
     try {
       const jsonValue = JSON.stringify(data);
       await AsyncStorage.setItem("fullName", jsonValue);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  // working code for storing data in asyncstorage
+  const storeUserId = async (data) => {
+    try {
+      const jsonValue = data.toString();
+      await AsyncStorage.setItem("userId", jsonValue);
     } catch (e) {
       console.log(e);
     }

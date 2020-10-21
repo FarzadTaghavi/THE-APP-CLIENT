@@ -4,7 +4,6 @@ import {
   Text,
   View,
   StyleSheet,
-  Button,
   Image,
   TouchableOpacity,
   Dimensions,
@@ -13,6 +12,7 @@ var { width } = Dimensions.get("window");
 import { useQuery } from "@apollo/client";
 import { PRODUCTS_BY_STORE_ID } from "../graphql/queries";
 import AsyncStorage from "@react-native-community/async-storage";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function ProductCart({ navigation }) {
   const [storeId, setStoreId] = useState(1);
@@ -21,16 +21,6 @@ export default function ProductCart({ navigation }) {
   const { loading, error, data } = useQuery(PRODUCTS_BY_STORE_ID, {
     variables: { id: storeId },
   });
-
-  function onLoadTotal() {
-    let total = 0;
-    const cart = getCart;
-
-    for (var i = 0; i < cart.length; i++) {
-      total = total + cart[i].price * cart[i].quantity;
-    }
-    return total.toFixed(2);
-  }
 
   useEffect(() => {
     async function retrieveData() {
@@ -42,7 +32,17 @@ export default function ProductCart({ navigation }) {
       }
     }
     retrieveData();
-  }, []);
+  }, [getCart]);
+
+  function onLoadTotal() {
+    let total = 0;
+    const cart = getCart;
+
+    for (var i = 0; i < cart.length; i++) {
+      total = total + cart[i].price * cart[i].quantity;
+    }
+    return total.toFixed(2);
+  }
 
   function onClickAddCart(data) {
     const itemcart = {
@@ -72,66 +72,128 @@ export default function ProductCart({ navigation }) {
       });
   }
 
-  function clearStorage() {
-    AsyncStorage.clear();
-    navigation.navigate();
-  }
-
-  if (data) {
+  if (data)
     return (
-      <View style={styles.mainContainer}>
-        <View>
-          <Text style={styles.products}>Select products:</Text>
-          {data.productsByStoreId.map((product) => (
-            <Text style={styles.categoryCard} key={product.id}>
-              <Text>
-                {product.name} - €{product.price}
-                <Image
-                  resizeMode={"contain"}
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <View style={{ height: 20 }} />
+        <Text
+          style={{
+            fontSize: 32,
+            fontWeight: "bold",
+            color: "#33c37d",
+            marginTop: 40,
+          }}
+        >
+          Order details
+        </Text>
+        <View style={{ height: 10 }} />
+
+        <View style={{ flex: 1 }}>
+          <ScrollView>
+            {data.productsByStoreId.map((product, i) => {
+              return (
+                <View
+                  key={i}
                   style={{
-                    width: width / 4,
-                    height: width / 4,
-                    borderRadius: 99,
-                  }}
-                  source={{
-                    uri: product.image,
-                  }}
-                />
-                <TouchableOpacity
-                  onPress={() => onClickAddCart(product)}
-                  style={{
-                    width: "100%",
-                    backgroundColor: "#33c37d",
+                    width: width - 30,
+                    margin: 12,
+                    backgroundColor: "white",
                     flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    borderRadius: 5,
-                    padding: 4,
-                    margin: 5,
+                    borderBottomWidth: 5,
+                    borderRightWidth: 3,
+                    borderColor: "#cccccc",
+                    paddingBottom: 10,
+                    borderRadius: 15,
                   }}
                 >
-                  <Text
-                    style={{ fontSize: 18, color: "white", fontWeight: "bold" }}
+                  <Image
+                    resizeMode={"contain"}
+                    style={{
+                      width: width / 3,
+                      height: width / 3,
+                      borderRadius: 99,
+                    }}
+                    source={{ uri: product.image }}
+                  />
+                  <View
+                    style={{
+                      flex: 1,
+                      backgroundColor: "trangraysparent",
+                      padding: 10,
+                      justifyContent: "space-between",
+                    }}
                   >
-                    Add Cart
-                  </Text>
-                  <View style={{ width: 10 }} />
-                  <Icon name="ios-add-circle" size={30} color={"white"} />
-                </TouchableOpacity>
-              </Text>
-            </Text>
-          ))}
-        </View>
-        <View>
+                    <View>
+                      <Text style={{ fontWeight: "bold", fontSize: 20 }}>
+                        {product.name}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontWeight: "bold",
+                          color: "#33c37d",
+                          fontSize: 20,
+                        }}
+                      >
+                        €{product.price}
+                      </Text>
+                      <View
+                        style={{ flexDirection: "row", alignItems: "center" }}
+                      >
+                        <TouchableOpacity
+                          onPress={() => onClickAddCart(product)}
+                          style={{
+                            width: 40,
+                            backgroundColor: "#33c37d",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            borderRadius: 5,
+                            padding: 5,
+                            paddingRight: 5,
+                            margin: 5,
+                          }}
+                        >
+                          <Text
+                            style={{
+                              fontSize: 18,
+                              color: "white",
+                              fontWeight: "bold",
+                            }}
+                          ></Text>
+                          <View style={{ width: 10 }} />
+                          <Icon
+                            name="ios-add-circle"
+                            size={30}
+                            color={"white"}
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              );
+            })}
+
+            <View style={{ height: 20 }} />
+          </ScrollView>
           <TouchableOpacity
             onPress={() => navigation.navigate("OrderDetails")}
             style={{
               backgroundColor: "#33c37d",
               width: width - 40,
               alignItems: "center",
+              justifyContent: "space-evenly",
               padding: 10,
-              borderRadius: 5,
+              borderRadius: 10,
               margin: 20,
+              height: 60,
             }}
           >
             <Text
@@ -139,22 +201,18 @@ export default function ProductCart({ navigation }) {
                 fontSize: 24,
                 fontWeight: "bold",
                 color: "white",
-                height: 50,
-                paddingTop: 10,
+
+                paddingRight: 20,
               }}
             >
-              Place Order{" "}
+              Place Order
               <Text
                 style={{
                   fontSize: 22,
                   color: "white",
                   backgroundColor: "#337a36",
-                  width: "100%",
                   textAlign: "center",
                   fontWeight: "bold",
-                  borderRadius: 5,
-                  padding: 10,
-                  margin: 5,
                 }}
               >
                 € {onLoadTotal()}
@@ -162,15 +220,11 @@ export default function ProductCart({ navigation }) {
             </Text>
           </TouchableOpacity>
 
-          <Button
-            title="LOG OUT"
-            color="#5cb85c"
-            onPress={() => clearStorage()}
-          />
+          <View style={{ height: 20 }} />
         </View>
       </View>
     );
-  } else {
+  else {
     return (
       <View>
         <Text>Loading</Text>

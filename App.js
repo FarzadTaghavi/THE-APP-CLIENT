@@ -14,15 +14,17 @@ import PaymentScreen from "./screens/PaymentScreen";
 import PaymentReceived from "./screens/PaymentReceived";
 import TrackOrder from "./screens/TrackOrder";
 import ProfilePage from "./screens/ProfilePage";
+import MyOrders from "./screens/MyOrders";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import {
-  ApolloProvider,
-  HttpLink,
-  ApolloClient,
-  InMemoryCache,
-} from "@apollo/client";
+import { ApolloProvider, HttpLink, ApolloClient } from "@apollo/client";
+
+import { InMemoryCache } from "apollo-cache-inmemory";
+
+const cache = new InMemoryCache({
+  dataIdFromObject: (o) => o.id,
+});
 
 //const httpLink = new HttpLink({ uri: "http://localhost:4000/graphql" });
 const httpLink = new HttpLink({ uri: "http://192.168.2.6:4000/graphql" });
@@ -30,7 +32,7 @@ const httpLink = new HttpLink({ uri: "http://192.168.2.6:4000/graphql" });
 const link = httpLink;
 const client = new ApolloClient({
   link,
-  cache: new InMemoryCache(),
+  cache,
 });
 
 const Stack = createStackNavigator();
@@ -64,6 +66,8 @@ export default function App() {
           <Stack.Screen name="OrderDetails" component={OrderDetails} />
           <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
           <Stack.Screen name="PaymentReceived" component={PaymentReceived} />
+          <Stack.Screen name="ProfilePage" component={ProfilePage} />
+          <Stack.Screen name="MyOrders" component={MyOrders} />
           <Stack.Screen name="TrackOrder" component={TrackOrder} />
           <Stack.Screen name="ProfilePage" component={ProfilePage} />
         </Stack.Navigator>

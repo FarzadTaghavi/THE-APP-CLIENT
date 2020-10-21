@@ -76,6 +76,19 @@ export const PRODUCTS_BY_STORE_ID = gql`
   }
 `;
 
+export const ALL_ORDERS_BY_USER_ID = gql`
+  query GetAllOrdersByUserId($id: Int!) {
+    allOrdersByUserId(id: $id) {
+      id
+      userId
+      storeId
+      delivererId
+      orderTotal
+      status
+    }
+  }
+`;
+
 export const LOGIN = gql`
   query login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
@@ -94,6 +107,30 @@ export const CREATE_USER = gql`
     SignUp(fullName: $fullName, email: $email, password: $password) {
       fullName
       email
+    }
+  }
+`;
+
+export const NEW_ORDER = gql`
+  mutation NewOrder(
+    $userId: Int!
+    $storeId: Int!
+    $delivererId: Int!
+    $orderTotal: Float!
+    $status: String!
+  ) {
+    NewOrder(
+      userId: $userId
+      storeId: $storeId
+      delivererId: $delivererId
+      orderTotal: $orderTotal
+      status: $status
+    ) {
+      userId
+      storeId
+      delivererId
+      orderTotal
+      status
     }
   }
 `;

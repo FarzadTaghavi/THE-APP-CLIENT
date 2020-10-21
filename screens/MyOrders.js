@@ -6,10 +6,12 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
+var { width } = Dimensions.get("window");
 import { useQuery } from "@apollo/client";
 import { ALL_ORDERS_BY_USER_ID } from "../graphql/queries";
 import Icon from "react-native-vector-icons/Ionicons";
 import AsyncStorage from "@react-native-community/async-storage";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function MyOrders({ navigation }) {
   const [userId, setUserId] = useState(0);
@@ -62,22 +64,25 @@ export default function MyOrders({ navigation }) {
           >
             Your Orders
           </Text>
-          {data.allOrdersByUserId.map((store, i) => (
-            <TouchableOpacity style={styles.categoryCard} key={i}>
-              <Text>Order status: {store.status}</Text>
-              <Text>order amount: {store.orderTotal}</Text>
+          <ScrollView style={{ width: width - 30 }}>
+            {data.allOrdersByUserId.map((store, i) => (
+              <View style={styles.categoryCard} key={i}>
+                <Text>Order status: {store.status}</Text>
+                <Text>order amount: {store.orderTotal}</Text>
 
-              <TouchableOpacity style={{ top: 10 }}>
-                <Text style={{ fontWeight: "600" }}>Products:</Text>
-                {data.products.map((store, i) => (
-                  <Text key={i} style={{ paddingTop: 5 }}>
-                    {store.name}
-                  </Text>
-                ))}
-              </TouchableOpacity>
-            </TouchableOpacity>
-          ))}
+                {/* <View style={{ top: 10 }}>
+                  <Text style={{ fontWeight: "600" }}>Products:</Text>
+                  {data.products.map((store, i) => (
+                    <Text key={i} style={{ paddingTop: 5 }}>
+                      {store.name}
+                    </Text>
+                  ))}
+                </View> */}
+              </View>
+            ))}
+          </ScrollView>
         </View>
+
         <View style={{ flex: 1.5, backgroundColor: "blue" }}></View>
       </View>
     );
@@ -99,8 +104,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   categoryCard: {
-    width: 200,
-    height: 200,
+    width: width - 50,
+    height: 80,
     margin: 10,
     padding: 15,
     borderWidth: 1,

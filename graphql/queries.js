@@ -86,9 +86,6 @@ export const ALL_ORDERS_BY_USER_ID = gql`
       orderTotal
       status
     }
-    products {
-      name
-    }
   }
 `;
 

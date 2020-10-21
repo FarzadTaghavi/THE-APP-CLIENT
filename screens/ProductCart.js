@@ -22,16 +22,6 @@ export default function ProductCart({ navigation }) {
     variables: { id: storeId },
   });
 
-  function onLoadTotal() {
-    let total = 0;
-    const cart = getCart;
-
-    for (var i = 0; i < cart.length; i++) {
-      total = total + cart[i].price * cart[i].quantity;
-    }
-    return total.toFixed(2);
-  }
-
   useEffect(() => {
     async function retrieveData() {
       try {
@@ -43,6 +33,16 @@ export default function ProductCart({ navigation }) {
     }
     retrieveData();
   }, []);
+
+  function onLoadTotal() {
+    let total = 0;
+    const cart = getCart;
+
+    for (var i = 0; i < cart.length; i++) {
+      total = total + cart[i].price * cart[i].quantity;
+    }
+    return total.toFixed(2);
+  }
 
   function onClickAddCart(data) {
     const itemcart = {

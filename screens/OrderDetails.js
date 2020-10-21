@@ -2,10 +2,8 @@ import React, { useState, useEffect } from "react";
 import {
   Text,
   View,
-  Button,
   Image,
   TouchableOpacity,
-  StyleSheet,
   Dimensions,
   ScrollView,
 } from "react-native";
@@ -17,29 +15,27 @@ function OrderDetails({ navigation }) {
   const [state, setState] = useState({
     dataCart: [],
   });
-  const [getTotal, setTotal] = useState(0);
-  console.log("getTotal", getTotal);
-  console.log("state:", state);
 
+  // get total cart amount
   function onLoadTotal() {
     let total = 0;
     const cart = state.dataCart;
 
     for (var i = 0; i < cart.length; i++) {
-      total = total + cart[i].price * cart[i].quantity;
+      total = total + cart[i].price.toFixed(2) * cart[i].quantity;
     }
-    return total.toFixed(2);
-    setTotal(total);
+    return total;
   }
 
+  // get items from product cart page
   useEffect(() => {
     {
       AsyncStorage.getItem("cart")
         .then((cart) => {
           if (cart !== null) {
-            // We have data!!
             const cartfood = JSON.parse(cart);
             setState({ dataCart: cartfood });
+            // set the cart items in the state
           }
         })
         .catch((err) => {
@@ -202,16 +198,10 @@ function OrderDetails({ navigation }) {
                 margin: 5,
               }}
             >
-              € {onLoadTotal()}
+              € {onLoadTotal().toFixed(2)}
             </Text>
           </Text>
         </TouchableOpacity>
-        <Button
-          title="LOG OUT"
-          color="#5cb85c"
-          onPress={() => clearStorage()}
-        />
-        <Button title="Go back" onPress={() => navigation.goBack()} />
 
         <View style={{ height: 20 }} />
       </View>

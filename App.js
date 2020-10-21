@@ -46,7 +46,7 @@ export default function App() {
             gesturesEnabled: true,
           }}
         >
-          <Stack.Screen
+          {/* <Stack.Screen
             name="GetLocationScreen"
             component={GetLocationScreen}
           />
@@ -57,7 +57,7 @@ export default function App() {
             component={SignUpOrLoginScreen}
           />
           <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
-          <Stack.Screen name="LogInScreen" component={LogInScreen} />
+          <Stack.Screen name="LogInScreen" component={LogInScreen} /> */}
           <Stack.Screen name="Categories" component={Categories} />
           <Stack.Screen name="StoreTypes" component={StoreTypes} />
           <Stack.Screen name="Stores" component={Stores} />

@@ -113,3 +113,27 @@ export const CREATE_USER = gql`
     }
   }
 `;
+
+export const NEW_ORDER = gql`
+  mutation NewOrder(
+    $userId: Int!
+    $storeId: Int!
+    $delivererId: Int!
+    $orderTotal: Float!
+    $status: String!
+  ) {
+    NewOrder(
+      userId: $userId
+      storeId: $storeId
+      delivererId: $delivererId
+      orderTotal: $orderTotal
+      status: $status
+    ) {
+      userId
+      storeId
+      delivererId
+      orderTotal
+      status
+    }
+  }
+`;

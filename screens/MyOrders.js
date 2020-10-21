@@ -29,57 +29,65 @@ export default function MyOrders({ navigation }) {
     retrieveData();
   }, []);
 
-  return (
-    <View style={{ flex: 1 }}>
-      <View style={{ flex: 1, backgroundColor: "white" }}>
-        <Icon
-          onPress={() => navigation.navigate("ProfilePage")}
+  if (data) {
+    return (
+      <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: "white" }}>
+          <Icon
+            onPress={() => navigation.navigate("ProfilePage")}
+            style={{
+              top: 43,
+              left: 30,
+            }}
+            name="ios-arrow-round-back"
+            size={38}
+            color={"grey"}
+          />
+        </View>
+        <View
           style={{
-            top: 43,
-            left: 30,
-          }}
-          name="ios-arrow-round-back"
-          size={38}
-          color={"grey"}
-        />
-      </View>
-      <View
-        style={{
-          flex: 6,
-          backgroundColor: "gold",
-          alignItems: "center",
-          justifyContent: "flex-start",
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 22,
-            marginTop: 20,
-            marginBottom: 20,
-            fontWeight: "800",
+            flex: 6,
+            backgroundColor: "gold",
+            alignItems: "center",
+            justifyContent: "flex-start",
           }}
         >
-          Your Orders
-        </Text>
-        {data.allOrdersByUserId.map((store) => (
-          <TouchableOpacity style={styles.categoryCard} key={store.id}>
-            <Text>Order status: {store.status}</Text>
-            <Text>order amount: {store.orderTotal}</Text>
+          <Text
+            style={{
+              fontSize: 22,
+              marginTop: 20,
+              marginBottom: 20,
+              fontWeight: "800",
+            }}
+          >
+            Your Orders
+          </Text>
+          {data.allOrdersByUserId.map((store, i) => (
+            <TouchableOpacity style={styles.categoryCard} key={i}>
+              <Text>Order status: {store.status}</Text>
+              <Text>order amount: {store.orderTotal}</Text>
 
-            <TouchableOpacity style={{ top: 10 }}>
-              <Text style={{ fontWeight: "600" }}>Products:</Text>
-              {data.products.map((store) => (
-                <Text key={store.id} style={{ paddingTop: 5 }}>
-                  {store.name}
-                </Text>
-              ))}
+              <TouchableOpacity style={{ top: 10 }}>
+                <Text style={{ fontWeight: "600" }}>Products:</Text>
+                {data.products.map((store, i) => (
+                  <Text key={i} style={{ paddingTop: 5 }}>
+                    {store.name}
+                  </Text>
+                ))}
+              </TouchableOpacity>
             </TouchableOpacity>
-          </TouchableOpacity>
-        ))}
+          ))}
+        </View>
+        <View style={{ flex: 1.5, backgroundColor: "blue" }}></View>
       </View>
-      <View style={{ flex: 1.5, backgroundColor: "blue" }}></View>
-    </View>
-  );
+    );
+  } else {
+    return (
+      <View>
+        <Text>Loading</Text>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

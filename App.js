@@ -18,12 +18,13 @@ import MyOrders from "./screens/MyOrders";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import {
-  ApolloProvider,
-  HttpLink,
-  ApolloClient,
-  InMemoryCache,
-} from "@apollo/client";
+import { ApolloProvider, HttpLink, ApolloClient } from "@apollo/client";
+
+import { InMemoryCache } from "apollo-cache-inmemory";
+
+const cache = new InMemoryCache({
+  dataIdFromObject: (o) => o.id,
+});
 
 //const httpLink = new HttpLink({ uri: "http://localhost:4000/graphql" });
 const httpLink = new HttpLink({ uri: "http://192.168.2.6:4000/graphql" });
@@ -31,7 +32,7 @@ const httpLink = new HttpLink({ uri: "http://192.168.2.6:4000/graphql" });
 const link = httpLink;
 const client = new ApolloClient({
   link,
-  cache: new InMemoryCache(),
+  cache,
 });
 
 const Stack = createStackNavigator();
@@ -46,7 +47,7 @@ export default function App() {
             gesturesEnabled: true,
           }}
         >
-          {/* <Stack.Screen
+          <Stack.Screen
             name="GetLocationScreen"
             component={GetLocationScreen}
           />
@@ -57,7 +58,7 @@ export default function App() {
             component={SignUpOrLoginScreen}
           />
           <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
-          <Stack.Screen name="LogInScreen" component={LogInScreen} /> */}
+          <Stack.Screen name="LogInScreen" component={LogInScreen} />
           <Stack.Screen name="Categories" component={Categories} />
           <Stack.Screen name="StoreTypes" component={StoreTypes} />
           <Stack.Screen name="Stores" component={Stores} />

@@ -10,24 +10,33 @@ import {
 var { width } = Dimensions.get("window");
 import Icon from "react-native-vector-icons/Ionicons";
 import AsyncStorage from "@react-native-community/async-storage";
+import { NEW_ORDER } from "../graphql/queries";
+import { useMutation } from "@apollo/client";
 
 function OrderDetails({ navigation }) {
+  const [createNewOrder, { error }] = useMutation(NEW_ORDER);
+  const [getTotal, setTotal] = useState(0);
+  const [getUserId, setUserId] = useState(0);
+
   const [state, setState] = useState({
     dataCart: [],
   });
 
   // get total cart amount
-  function onLoadTotal() {
-    let total = 0;
-    const cart = state.dataCart;
+  useEffect(() => {
+    function onLoadTotal() {
+      let total = 0;
+      const cart = state.dataCart;
 
-    for (var i = 0; i < cart.length; i++) {
-      total = total + cart[i].price.toFixed(2) * cart[i].quantity;
+      for (var i = 0; i < cart.length; i++) {
+        total = total + cart[i].price * cart[i].quantity;
+      }
+      setTotal(total);
     }
-    return total;
-  }
-
+    onLoadTotal();
+  }, [onChangeQual]);
   // get items from product cart page
+
   useEffect(() => {
     {
       AsyncStorage.getItem("cart")
@@ -46,7 +55,7 @@ function OrderDetails({ navigation }) {
 
   function onChangeQual(i, type) {
     const dataCar = state.dataCart;
-    console.log("dataCar: ", dataCar);
+
     let cantd = dataCar[i].quantity;
 
     if (type) {
@@ -63,15 +72,42 @@ function OrderDetails({ navigation }) {
     }
   }
 
-  function clearStorage() {
-    AsyncStorage.clear();
-    navigation.navigate("Categories");
+  function checkout() {
+    const newOrder = createNewOrder({
+      variables: {
+        userId: getUserId,
+        storeId: 1,
+        delivererId: 1,
+        orderTotal: getTotal,
+        status: "pending",
+      },
+    });
+    navigation.navigate("PaymentScreen");
   }
+
+  useEffect(() => {
+    async function retrieveData() {
+      try {
+        const id = await AsyncStorage.getItem("userId");
+        setUserId(parseInt(id));
+      } catch (error) {
+        console.log("error: ", error.message);
+      }
+    }
+    retrieveData();
+  }, []);
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <View style={{ height: 20 }} />
-      <Text style={{ fontSize: 32, fontWeight: "bold", color: "#33c37d" }}>
+      <Text
+        style={{
+          fontSize: 32,
+          fontWeight: "bold",
+          color: "#33c37d",
+          marginTop: 40,
+        }}
+      >
         Order details
       </Text>
       <View style={{ height: 10 }} />
@@ -83,13 +119,15 @@ function OrderDetails({ navigation }) {
               <View
                 key={i}
                 style={{
-                  width: width - 20,
-                  margin: 10,
-                  backgroundColor: "transparent",
+                  width: width - 30,
+                  margin: 12,
+                  backgroundColor: "white",
                   flexDirection: "row",
-                  borderBottomWidth: 2,
+                  borderBottomWidth: 5,
+                  borderRightWidth: 3,
                   borderColor: "#cccccc",
                   paddingBottom: 10,
+                  borderRadius: 15,
                 }}
               >
                 <Image
@@ -127,7 +165,7 @@ function OrderDetails({ navigation }) {
                         fontSize: 20,
                       }}
                     >
-                      €{item.price * item.quantity}
+                      €{item.price.toFixed(2) * item.quantity}
                     </Text>
                     <View
                       style={{ flexDirection: "row", alignItems: "center" }}
@@ -165,14 +203,16 @@ function OrderDetails({ navigation }) {
         <View style={{ height: 20 }} />
 
         <TouchableOpacity
-          onPress={() => navigation.navigate("PaymentScreen")}
+          onPress={() => checkout()}
           style={{
             backgroundColor: "#33c37d",
             width: width - 40,
             alignItems: "center",
+            justifyContent: "space-evenly",
             padding: 10,
-            borderRadius: 5,
+            borderRadius: 10,
             margin: 20,
+            height: 60,
           }}
         >
           <Text
@@ -180,8 +220,8 @@ function OrderDetails({ navigation }) {
               fontSize: 24,
               fontWeight: "bold",
               color: "white",
-              height: 50,
-              paddingTop: 10,
+
+              paddingRight: 20,
             }}
           >
             CHECKOUT
@@ -190,15 +230,11 @@ function OrderDetails({ navigation }) {
                 fontSize: 22,
                 color: "white",
                 backgroundColor: "#337a36",
-                width: "100%",
                 textAlign: "center",
                 fontWeight: "bold",
-                borderRadius: 15,
-                padding: 20,
-                margin: 5,
               }}
             >
-              € {onLoadTotal().toFixed(2)}
+              € {getTotal.toFixed(2)}
             </Text>
           </Text>
         </TouchableOpacity>

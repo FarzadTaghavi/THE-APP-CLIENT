@@ -8,7 +8,6 @@ import LogInScreen from "./screens/LogInScreen";
 import Categories from "./screens/Categories";
 import StoreTypes from "./screens/StoreTypes";
 import Stores from "./screens/Stores";
-import Products from "./screens/Products";
 import ProductCart from "./screens/ProductCart";
 import OrderDetails from "./screens/OrderDetails";
 import PaymentScreen from "./screens/PaymentScreen";
@@ -65,8 +64,8 @@ export default function App() {
           <Stack.Screen name="OrderDetails" component={OrderDetails} />
           <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
           <Stack.Screen name="PaymentReceived" component={PaymentReceived} />
-          <Stack.Screen name="ProfilePage" component={ProfilePage} />
           <Stack.Screen name="TrackOrder" component={TrackOrder} />
+          <Stack.Screen name="ProfilePage" component={ProfilePage} />
         </Stack.Navigator>
       </NavigationContainer>
     </ApolloProvider>

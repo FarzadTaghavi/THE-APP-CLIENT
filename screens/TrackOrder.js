@@ -1,10 +1,68 @@
-import React from "react";
-import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
-var { width } = Dimensions.get("window");
+import React, { useState, useEffect } from "react";
+import MapView, { Marker } from "react-native-maps";
+import { StyleSheet, Text, View } from "react-native";
+
 import Icon from "react-native-vector-icons/Ionicons";
 
+import storefront from "../assets/storefront.png";
+import car from "../assets/car.png";
+import marker from "../assets/marker.png";
+import * as Location from "expo-location";
+
 export default function TrackOrder({ navigation }) {
+  const [userLocation, setUserLocation] = useState(null);
+  const [userLat, setUserLat] = useState(52.336319);
+  const [userLong, setUserLong] = useState(4.913255);
+  const [driverLat, setDriverLat] = useState(52.340463);
+  const [driverLong, setDriverLong] = useState(4.903646);
+  const [timeleft, setTimeleft] = useState(10);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setUserLocation(location);
+      const latUser = location.coords.latitude;
+      setUserLat(parseFloat(latUser.toFixed(6)));
+      const longUser = location.coords.longitude;
+      setUserLong(parseFloat(location.coords.longitude.toFixed(6)));
+    })();
+  }, []);
+
+  let driLat = 52.340463;
+  let driLon = 4.903646;
+  let newTimeleft = timeleft;
+
+  useEffect(() => {
+    move();
+  }, []);
+
+  function move() {
+    let interval = setInterval(howMuchLonger, 1000);
+    function howMuchLonger() {
+      if (
+        driLat.toFixed(3) == userLat.toFixed(3) &&
+        driLon.toFixed(3) == userLong.toFixed(3)
+      ) {
+        clearInterval(interval);
+      } else {
+        const newdDriverLat = (driLat -= 0.0004144);
+        const newDriverLong = (driLon += 0.0009609);
+
+        driLat = newdDriverLat;
+        driLon = newDriverLong;
+
+        setDriverLat(driLat);
+        setDriverLong(driLon);
+        setTimeleft((newTimeleft -= 1));
+      }
+    }
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1, backgroundColor: "white" }}>
@@ -27,26 +85,34 @@ export default function TrackOrder({ navigation }) {
         }}
       >
         <MapView
-          provider={PROVIDER_GOOGLE}
-          style={{ ...StyleSheet.absoluteFillObject }}
           region={{
             latitude: 52.336319,
             longitude: 4.913255,
-            latitudeDelta: 0.009,
-            longitudeDelta: 0.009,
+            latitudeDelta: 0.03,
+            longitudeDelta: 0.03,
           }}
+          style={{ ...StyleSheet.absoluteFillObject }}
         >
-          <MapView.Marker
+          <Marker
             coordinate={{
-              latitude: 52.336319,
-              longitude: 4.913255,
+              latitude: userLat,
+              longitude: userLong,
             }}
+            image={marker}
           />
-          <MapView.Marker
+          <Marker
             coordinate={{
-              latitude: 52.336319,
-              longitude: 4.913255,
+              latitude: 52.343541,
+              longitude: 4.906605,
             }}
+            image={storefront}
+          />
+          <Marker
+            coordinate={{
+              latitude: driverLat,
+              longitude: driverLong,
+            }}
+            image={car}
           />
         </MapView>
       </View>
@@ -60,27 +126,35 @@ export default function TrackOrder({ navigation }) {
             justifyContent: "space-evenly",
           }}
         >
-          <View
-            style={{
-              width: 120,
-              height: 120,
-              marginTop: 50,
-              fontSize: 22,
-              paddingTop: 15,
-              paddingBottom: 15,
-              borderWidth: 4,
-              shadowColor: "black",
-              alignSelf: "center",
-              borderColor: "#000",
-              borderRadius: "70",
-            }}
-          >
+          {timeleft == 0 ? (
             <Text style={{ textAlign: "center", marginTop: 30, fontSize: 18 }}>
-              {" "}
-              8 min
+              Order arrived!
             </Text>
-          </View>
+          ) : (
+            <View
+              style={{
+                width: 120,
+                height: 120,
+                marginTop: 50,
+                fontSize: 22,
+                paddingTop: 15,
+                paddingBottom: 15,
+                borderWidth: 4,
+                shadowColor: "black",
+                alignSelf: "center",
+                borderColor: "#000",
+                borderRadius: "70",
+              }}
+            >
+              <Text
+                style={{ textAlign: "center", marginTop: 30, fontSize: 18 }}
+              >
+                {timeleft} sec
+              </Text>
+            </View>
+          )}
         </View>
+
         <View
           style={{
             flex: 1,
@@ -89,7 +163,11 @@ export default function TrackOrder({ navigation }) {
             marginTop: 50,
           }}
         >
-          <Text style={{ fontSize: 18 }}>Your order is on its way</Text>
+          {timeleft == 0 ? (
+            <Text style={{ fontSize: 18 }}>Enjoy your meal</Text>
+          ) : (
+            <Text style={{ fontSize: 18 }}>Your order is on its way</Text>
+          )}
         </View>
         <View
           style={{

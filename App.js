@@ -69,7 +69,6 @@ export default function App() {
           <Stack.Screen name="ProfilePage" component={ProfilePage} />
           <Stack.Screen name="MyOrders" component={MyOrders} />
           <Stack.Screen name="TrackOrder" component={TrackOrder} />
-          <Stack.Screen name="ProfilePage" component={ProfilePage} />
         </Stack.Navigator>
       </NavigationContainer>
     </ApolloProvider>

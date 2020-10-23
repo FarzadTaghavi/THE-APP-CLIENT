@@ -157,8 +157,6 @@ export default function categories({ navigation }) {
       <View>
         <Text
           style={{
-            /* flex: 1,
-            flexDirection: "column-reverse", */
             alignItems: "center",
             justifyContent: "center",
             alignContent: "center",

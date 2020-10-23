@@ -297,7 +297,7 @@ export default function ProfilePage({ navigation }) {
           </Text>
         </TouchableOpacity>
       </View>
-      <View style={{ flex: 1.5, backgroundColor: "blue" }}></View>
+      <View style={{ flex: 1.5, backgroundColor: "white" }}></View>
     </View>
   );
 }

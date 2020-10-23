@@ -12,7 +12,7 @@ var { width } = Dimensions.get("window");
 export default function SignUpOrLoginScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>APP NAME</Text>
+      <Text style={styles.headerText}>THE APP</Text>
 
       <TouchableOpacity
         onPress={() => navigation.navigate("SignUpScreen")}

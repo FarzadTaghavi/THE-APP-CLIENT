@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import MapView, { Marker } from "react-native-maps";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Alert, Share } from "react-native";
 
 import Icon from "react-native-vector-icons/Ionicons";
-
 import storefront from "../assets/storefront.png";
 import car from "../assets/car.png";
 import marker from "../assets/marker.png";
 import * as Location from "expo-location";
+import call from "react-native-phone-call";
 
 export default function TrackOrder({ navigation }) {
   const [userLocation, setUserLocation] = useState(null);
@@ -17,6 +17,43 @@ export default function TrackOrder({ navigation }) {
   const [driverLong, setDriverLong] = useState(4.903646);
   const [timeleft, setTimeleft] = useState(10);
 
+  async function share() {
+    try {
+      const result = await Share.share({
+        message: `My order just got delivered from THE APP. Its amazing! Try it out!`,
+      });
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          console.log("shared with activity type of", result.activityType);
+        } else {
+          console.log("shared");
+        }
+      } else if (result.action === Share.dismissedAction) {
+        console.log("dismissed");
+      }
+    } catch (error) {
+      Alert.alert(error.message);
+      console.log("failed sharing:", error);
+    }
+  }
+
+  const [inputValue, setInputValue] = useState("9999999999");
+
+  const triggerCall = () => {
+    // Check for perfect 10 digit length
+    if (inputValue.length != 10) {
+      alert("Please insert correct contact number");
+      return;
+    }
+
+    const args = {
+      number: inputValue,
+      prompt: true,
+    };
+    // Make a call
+    call(args).catch(console.error);
+  };
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
@@ -86,7 +123,7 @@ export default function TrackOrder({ navigation }) {
           color={"black"}
         />
         <Icon
-          onPress={() => navigation.navigate("ProfilePage")}
+          onPress={() => share()}
           style={{
             flexDirection: "row-reverse",
             top: 40,
@@ -127,6 +164,7 @@ export default function TrackOrder({ navigation }) {
             }}
             image={storefront}
           />
+
           <Marker
             coordinate={{
               latitude: driverLat,
@@ -308,6 +346,7 @@ export default function TrackOrder({ navigation }) {
             }}
           >
             <Icon
+              onPress={() => triggerCall()}
               style={{
                 top: 0,
                 left: 18,

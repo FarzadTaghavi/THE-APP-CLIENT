@@ -47,7 +47,7 @@ export default function App() {
             gesturesEnabled: true,
           }}
         >
-          <Stack.Screen
+          {/* <Stack.Screen
             name="GetLocationScreen"
             component={GetLocationScreen}
           />
@@ -66,7 +66,7 @@ export default function App() {
           <Stack.Screen name="OrderDetails" component={OrderDetails} />
           <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
           <Stack.Screen name="ProfilePage" component={ProfilePage} />
-          <Stack.Screen name="MyOrders" component={MyOrders} />
+          <Stack.Screen name="MyOrders" component={MyOrders} /> */}
           <Stack.Screen name="PaymentReceived" component={PaymentReceived} />
           <Stack.Screen name="TrackOrder" component={TrackOrder} />
         </Stack.Navigator>

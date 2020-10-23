@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 var { width } = Dimensions.get("window");
-//import { TextInput } from "react-native-paper";
 
 export default function PaymentScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -19,7 +18,7 @@ export default function PaymentScreen({ navigation }) {
   const [name, setName] = useState("");
 
   return (
-    <View /* style={styles.container} */>
+    <View>
       <View>
         <Text style={styles.introMessage}>Pay with card</Text>
         <View>

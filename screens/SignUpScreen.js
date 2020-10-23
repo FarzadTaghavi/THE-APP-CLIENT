@@ -34,7 +34,7 @@ export default function LogIn({ navigation }) {
   }
 
   return (
-    <View /* style={styles.container} */>
+    <View>
       <View>
         <Text style={styles.introMessage}>Sign Up</Text>
         <TextInput

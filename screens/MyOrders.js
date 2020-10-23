@@ -69,15 +69,6 @@ export default function MyOrders({ navigation }) {
               <View style={styles.categoryCard} key={i}>
                 <Text>Order status: {store.status}</Text>
                 <Text>order amount: {store.orderTotal}</Text>
-
-                {/* <View style={{ top: 10 }}>
-                  <Text style={{ fontWeight: "600" }}>Products:</Text>
-                  {data.products.map((store, i) => (
-                    <Text key={i} style={{ paddingTop: 5 }}>
-                      {store.name}
-                    </Text>
-                  ))}
-                </View> */}
               </View>
             ))}
           </ScrollView>
@@ -111,8 +102,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     justifyContent: "center",
     flexDirection: "column",
-    //textAlign: "center",
-    //alignItems: "center",
     borderColor: "#000",
     borderRadius: 5,
   },

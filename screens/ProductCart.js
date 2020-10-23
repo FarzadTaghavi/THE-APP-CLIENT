@@ -244,8 +244,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   products: {
-    //justifyContent: "center",
-    //textAlign: "center",
     alignSelf: "center",
     flexDirection: "row",
     fontSize: 20,

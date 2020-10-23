@@ -14,7 +14,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 export default function storeTypes({ navigation }) {
   const [categoryId, setCategoryId] = useState(0);
 
-  // working code
+  // get the categoryId from storage
   useEffect(() => {
     async function retrieveData() {
       try {

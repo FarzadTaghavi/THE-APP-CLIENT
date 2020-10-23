@@ -5,7 +5,6 @@ import AsyncStorage from "@react-native-community/async-storage";
 
 export default function ProfilePage({ navigation }) {
   const [getUser, setUser] = useState("");
-  //console.log("initial state getUser: ", getUser);
 
   useEffect(() => {
     async function retrieveData() {

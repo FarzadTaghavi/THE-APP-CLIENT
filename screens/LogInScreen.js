@@ -26,17 +26,15 @@ export default function LogIn({ navigation }) {
     },
   });
 
-  // working code for login with validation
-
   function getData() {
     LOGIN;
     if (data) {
       const fullName = data.login.user.fullName;
-      //console.log("fullName fetched", fullName);
+
       storeData(fullName);
 
       const id = data.login.user.id;
-      //console.log("userId fetched", id);
+
       storeUserId(id);
       navigation.navigate("Categories");
     } else {
@@ -44,7 +42,6 @@ export default function LogIn({ navigation }) {
     }
   }
 
-  // working code for storing data in asyncstorage
   const storeData = async (data) => {
     try {
       const jsonValue = JSON.stringify(data);
@@ -54,7 +51,6 @@ export default function LogIn({ navigation }) {
     }
   };
 
-  // working code for storing data in asyncstorage
   const storeUserId = async (data) => {
     try {
       const jsonValue = data.toString();
@@ -65,7 +61,7 @@ export default function LogIn({ navigation }) {
   };
 
   return (
-    <View /* style={styles.container} */>
+    <View>
       <View>
         <Text style={styles.introMessage}>LOGIN</Text>
         <TextInput

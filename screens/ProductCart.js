@@ -167,7 +167,7 @@ export default function ProductCart({ navigation }) {
                               fontWeight: "bold",
                             }}
                           ></Text>
-                          <View style={{ width: 10 }} />
+                          <View style={{ width: 3 }} />
                           <Icon
                             name="ios-add-circle"
                             size={30}
@@ -181,19 +181,20 @@ export default function ProductCart({ navigation }) {
               );
             })}
 
-            <View style={{ height: 20 }} />
+            <View style={{ height: 10 }} />
           </ScrollView>
           <TouchableOpacity
             onPress={() => navigation.navigate("OrderDetails")}
             style={{
               backgroundColor: "#33c37d",
+              flexDirection: "row",
               width: width - 40,
               alignItems: "center",
-              justifyContent: "space-evenly",
+              justifyContent: "center",
               padding: 10,
               borderRadius: 10,
               margin: 20,
-              height: 60,
+              height: 70,
             }}
           >
             <Text
@@ -201,22 +202,22 @@ export default function ProductCart({ navigation }) {
                 fontSize: 24,
                 fontWeight: "bold",
                 color: "white",
-
-                paddingRight: 20,
               }}
             >
-              Place Order
-              <Text
-                style={{
-                  fontSize: 22,
-                  color: "white",
-                  backgroundColor: "#337a36",
-                  textAlign: "center",
-                  fontWeight: "bold",
-                }}
-              >
-                € {onLoadTotal()}
-              </Text>
+              PLACE ORDER
+            </Text>
+            <Text
+              style={{
+                fontSize: 22,
+                color: "white",
+                backgroundColor: "#337a36",
+                fontWeight: "bold",
+                marginLeft: 20,
+                padding: 10,
+                borderRadius: 50,
+              }}
+            >
+              € {onLoadTotal()}
             </Text>
           </TouchableOpacity>
 

@@ -1,22 +1,48 @@
 import React from "react";
-import { Text, View, StyleSheet, Button, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+  ScrollView,
+} from "react-native";
+var { width } = Dimensions.get("window");
 
 export default function PaymentReceived({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Payment Received!</Text>
       <View>
-        <Text style={styles.locationMessage}>
+        <Text style={styles.description}>
           Sit back and relax. Your order will be delivered soon.
         </Text>
       </View>
-      <View style={styles.buttonLocation}>
-        <Button
-          title="Track Order"
-          color="#5cb85c"
-          onPress={() => navigation.navigate("TrackOrder")}
-        />
-      </View>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("TrackOrder")}
+        style={{
+          backgroundColor: "#33c37d",
+          flexDirection: "row",
+          width: width - 40,
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 10,
+          borderRadius: 10,
+          margin: 20,
+          height: 70,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 24,
+            fontWeight: "bold",
+            color: "white",
+          }}
+        >
+          TRACK ORDER
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -29,29 +55,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginBottom: 10,
   },
-  locationMessage: {
+  description: {
     justifyContent: "center",
     textAlign: "center",
-    fontSize: 20,
+    fontSize: 28,
     width: 170,
-    marginBottom: 200,
+    marginBottom: 150,
   },
   headerText: {
-    fontSize: 30,
+    fontSize: 40,
     marginBottom: 100,
-  },
-  notNow: {
-    marginTop: 10,
-    color: "#5cb85c",
-    fontWeight: "bold",
-  },
-  buttonLocation: {
-    marginBottom: 10,
-    width: 150,
-  },
-  button: {
-    marginBottom: 20,
-    marginTop: 10,
-    width: 150,
   },
 });

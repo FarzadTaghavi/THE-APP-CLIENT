@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { useQuery } from "@apollo/client";
 import { CATEGORIES } from "../graphql/queries";
@@ -34,54 +35,138 @@ export default function categories({ navigation }) {
   if (data) {
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ flex: 1, backgroundColor: "white" }}>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            backgroundColor: "white",
+            borderBottomColor: "grey",
+            borderWidth: 1,
+          }}
+        >
           <Icon
             onPress={() => navigation.navigate("ProfilePage")}
             style={{
-              top: 43,
+              flexDirection: "row",
+              top: 50,
               left: 30,
             }}
             name="md-person"
-            size={38}
-            color={"grey"}
+            size={40}
+            color={"black"}
+          />
+          <Icon
+            onPress={() => navigation.navigate("ProfilePage")}
+            style={{
+              flexDirection: "row-reverse",
+              top: 50,
+              left: 320,
+            }}
+            name="md-share"
+            size={40}
+            color={"black"}
           />
         </View>
         <View
           style={{
             flex: 6,
-            backgroundColor: "gold",
+            backgroundColor: "white",
             alignItems: "center",
             justifyContent: "flex-start",
           }}
         >
           <Text
             style={{
-              fontSize: 22,
+              fontSize: 30,
               marginTop: 20,
               marginBottom: 20,
-              fontWeight: "800",
+              fontWeight: "600",
             }}
           >
-            Select a category
+            What do you need?
           </Text>
-          {data.storeCategories.map((category) => {
-            return (
-              <TouchableOpacity
-                key={category.id}
-                onPress={() => getSelectedCategoryId(category.id)}
-              >
-                <Text style={styles.categoryCard}>{category.type}</Text>
-              </TouchableOpacity>
-            );
-          })}
+          <ScrollView>
+            {data.storeCategories.map((category, i) => {
+              return (
+                <View
+                  key={i}
+                  style={{
+                    backgroundColor: "#33c37d",
+                    width: 250,
+                    flexDirection: "row",
+                    alignSelf: "center",
+                    alignItems: "center",
+                    justifyContent: "space-evenly",
+                    borderRadius: "50%",
+                    textAlign: "center",
+                    paddingLeft: 20,
+                    margin: 20,
+                    marginLeft: 10,
+                    height: 60,
+                  }}
+                >
+                  <View
+                    style={{
+                      flex: 1,
+                      backgroundColor: "trangraysparent",
+                      padding: 10,
+                      justifyContent: "space-between",
+                      alignSelf: "center",
+                      alignItems: "center",
+                      justifyContent: "space-evenly",
+                      textAlign: "center",
+                    }}
+                  >
+                    <View>
+                      <TouchableOpacity
+                        key={category.id}
+                        onPress={() => getSelectedCategoryId(category.id)}
+                      >
+                        <Text
+                          style={{
+                            fontWeight: "bold",
+                            fontSize: 28,
+                            color: "white",
+                          }}
+                        >
+                          {category.type}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <View
+                        style={{ flexDirection: "row", alignItems: "center" }}
+                      ></View>
+                    </View>
+                  </View>
+                </View>
+              );
+            })}
+          </ScrollView>
         </View>
-        <View style={{ flex: 1.5, backgroundColor: "blue" }}></View>
+        <View style={{ flex: 1.5, backgroundColor: "white" }}></View>
       </View>
     );
   } else {
     return (
       <View>
-        <Text>Loading</Text>
+        <Text
+          style={{
+            /* flex: 1,
+            flexDirection: "column-reverse", */
+            alignItems: "center",
+            justifyContent: "center",
+            alignContent: "center",
+            alignSelf: "center",
+          }}
+        >
+          Loading
+        </Text>
       </View>
     );
   }

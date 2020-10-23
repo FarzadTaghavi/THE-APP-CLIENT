@@ -17,26 +17,26 @@ function OrderDetails({ navigation }) {
   const [createNewOrder, { error }] = useMutation(NEW_ORDER);
   const [getTotal, setTotal] = useState(0);
   const [getUserId, setUserId] = useState(0);
-
   const [state, setState] = useState({
     dataCart: [],
   });
 
   // get total cart amount
   useEffect(() => {
-    function onLoadTotal() {
-      let total = 0;
-      const cart = state.dataCart;
-
-      for (var i = 0; i < cart.length; i++) {
-        total = total + cart[i].price * cart[i].quantity;
-      }
-      setTotal(total);
-    }
     onLoadTotal();
-  }, [onChangeQual]);
-  // get items from product cart page
+  }, [state]);
 
+  function onLoadTotal() {
+    let total = 0;
+    const cart = state.dataCart;
+
+    for (var i = 0; i < cart.length; i++) {
+      total = total + cart[i].price * cart[i].quantity;
+    }
+    setTotal(total);
+  }
+
+  // get items from product cart page
   useEffect(() => {
     {
       AsyncStorage.getItem("cart")
@@ -53,7 +53,7 @@ function OrderDetails({ navigation }) {
     }
   }, []);
 
-  function onChangeQual(i, type) {
+  function onChangeQuantity(i, type) {
     const dataCar = state.dataCart;
 
     let cantd = dataCar[i].quantity;
@@ -170,7 +170,9 @@ function OrderDetails({ navigation }) {
                     <View
                       style={{ flexDirection: "row", alignItems: "center" }}
                     >
-                      <TouchableOpacity onPress={() => onChangeQual(i, false)}>
+                      <TouchableOpacity
+                        onPress={() => onChangeQuantity(i, false)}
+                      >
                         <Icon
                           name="ios-remove-circle"
                           size={35}
@@ -186,7 +188,9 @@ function OrderDetails({ navigation }) {
                       >
                         {item.quantity}
                       </Text>
-                      <TouchableOpacity onPress={() => onChangeQual(i, true)}>
+                      <TouchableOpacity
+                        onPress={() => onChangeQuantity(i, true)}
+                      >
                         <Icon
                           name="ios-add-circle"
                           size={35}
@@ -206,13 +210,14 @@ function OrderDetails({ navigation }) {
           onPress={() => checkout()}
           style={{
             backgroundColor: "#33c37d",
+            flexDirection: "row",
             width: width - 40,
             alignItems: "center",
-            justifyContent: "space-evenly",
+            justifyContent: "center",
             padding: 10,
             borderRadius: 10,
             margin: 20,
-            height: 60,
+            height: 70,
           }}
         >
           <Text
@@ -220,22 +225,22 @@ function OrderDetails({ navigation }) {
               fontSize: 24,
               fontWeight: "bold",
               color: "white",
-
-              paddingRight: 20,
             }}
           >
             CHECKOUT
-            <Text
-              style={{
-                fontSize: 22,
-                color: "white",
-                backgroundColor: "#337a36",
-                textAlign: "center",
-                fontWeight: "bold",
-              }}
-            >
-              € {getTotal.toFixed(2)}
-            </Text>
+          </Text>
+          <Text
+            style={{
+              fontSize: 22,
+              color: "white",
+              backgroundColor: "#337a36",
+              fontWeight: "bold",
+              marginLeft: 20,
+              padding: 10,
+              borderRadius: 50,
+            }}
+          >
+            € {getTotal.toFixed(2)}
           </Text>
         </TouchableOpacity>
 

@@ -1,7 +1,16 @@
 import { useQuery, ApolloError } from "@apollo/client";
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Button, Alert } from "react-native";
+import {
+  Text,
+  View,
+  Dimensions,
+  StyleSheet,
+  TouchableOpacity,
+  Button,
+  Alert,
+} from "react-native";
 import { TextInput } from "react-native-paper";
+var { width } = Dimensions.get("window");
 import { LOGIN } from "../graphql/queries";
 import AsyncStorage from "@react-native-community/async-storage";
 import { parseValue } from "graphql";
@@ -73,9 +82,34 @@ export default function LogIn({ navigation }) {
             setPassword(text);
           }}
         />
-        <View style={styles.button}>
-          <Button title="Login" onPress={() => getData()}></Button>
-        </View>
+        <TouchableOpacity
+          onPress={() => getData()}
+          style={{
+            backgroundColor: "#33c37d",
+            width: 180,
+            flexDirection: "row",
+            alignSelf: "center",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+            borderRadius: 10,
+            textAlign: "center",
+            paddingLeft: 20,
+            margin: 20,
+            marginLeft: 30,
+            height: 60,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: "bold",
+              color: "white",
+              paddingRight: 20,
+            }}
+          >
+            Login
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

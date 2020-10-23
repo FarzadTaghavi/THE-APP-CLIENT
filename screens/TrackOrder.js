@@ -65,16 +65,36 @@ export default function TrackOrder({ navigation }) {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ flex: 1, backgroundColor: "white" }}>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          backgroundColor: "white",
+          borderBottomColor: "grey",
+          borderWidth: 1,
+        }}
+      >
         <Icon
           onPress={() => navigation.navigate("ProfilePage")}
           style={{
-            top: 43,
+            flexDirection: "row",
+            top: 40,
             left: 30,
           }}
           name="md-person"
-          size={38}
-          color={"grey"}
+          size={40}
+          color={"black"}
+        />
+        <Icon
+          onPress={() => navigation.navigate("ProfilePage")}
+          style={{
+            flexDirection: "row-reverse",
+            top: 40,
+            left: 320,
+          }}
+          name="md-share"
+          size={40}
+          color={"black"}
         />
       </View>
       <View
@@ -164,7 +184,7 @@ export default function TrackOrder({ navigation }) {
           }}
         >
           {timeleft == 0 ? (
-            <Text style={{ fontSize: 18 }}>Enjoy your meal</Text>
+            <Text style={{ fontSize: 18 }}>Enjoy your meal!</Text>
           ) : (
             <Text style={{ fontSize: 18 }}>Your order is on its way</Text>
           )}

@@ -1,5 +1,12 @@
 import React from "react";
-import { Text, View, StyleSheet, Button, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
+var { width } = Dimensions.get("window");
 
 export default function EndIntroScreen({ navigation }) {
   return (
@@ -9,13 +16,30 @@ export default function EndIntroScreen({ navigation }) {
           Couriers pick up your order and bring it to you in minutes!
         </Text>
       </View>
-      <View style={styles.button}>
-        <Button
-          title="Next"
-          color="#5cb85c"
-          onPress={() => navigation.navigate("SignUpOrLoginScreen")}
-        />
-      </View>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("SignUpOrLoginScreen")}
+        style={{
+          backgroundColor: "#33c37d",
+          flexDirection: "row",
+          width: width - 40,
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 10,
+          borderRadius: 10,
+          margin: 20,
+          height: 70,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 24,
+            fontWeight: "bold",
+            color: "white",
+          }}
+        >
+          Next
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }

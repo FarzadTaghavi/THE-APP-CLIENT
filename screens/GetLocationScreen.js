@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Alert, Text, View, StyleSheet, Button } from "react-native";
+import {
+  Alert,
+  Text,
+  View,
+  StyleSheet,
+  Button,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
+var { width } = Dimensions.get("window");
 import * as Location from "expo-location";
 import Geocoder from "react-native-geocoding";
 
@@ -36,13 +45,31 @@ export default function GetLocationScreen({ navigation }) {
           permissions
         </Text>
       </View>
-      <View style={styles.buttonLocation}>
-        <Button
-          title="Share location"
-          color="#5cb85c"
-          onPress={() => shareLocation()}
-        />
-      </View>
+      <TouchableOpacity
+        onPress={() => shareLocation()}
+        style={{
+          backgroundColor: "#33c37d",
+          flexDirection: "row",
+          width: width - 40,
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 10,
+          borderRadius: 10,
+          margin: 20,
+          height: 70,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 24,
+            fontWeight: "bold",
+            color: "white",
+          }}
+        >
+          Share location
+        </Text>
+      </TouchableOpacity>
+
       <View style={styles.button}>
         <Button
           title="Not now"

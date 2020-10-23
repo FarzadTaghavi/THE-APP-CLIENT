@@ -54,7 +54,6 @@ export default function ProductCart({ navigation }) {
     AsyncStorage.getItem("cart")
       .then((datacart) => {
         if (datacart !== null) {
-          // We have data!!
           const cart = JSON.parse(datacart);
           console.log("cart", cart);
           cart.push(itemcart);
@@ -65,7 +64,6 @@ export default function ProductCart({ navigation }) {
           cart.push(itemcart);
           AsyncStorage.setItem("cart", JSON.stringify(cart));
         }
-        //alert("Add Cart");
       })
       .catch((err) => {
         alert(err);

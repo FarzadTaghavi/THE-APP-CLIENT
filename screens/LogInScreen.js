@@ -66,14 +66,13 @@ export default function LogIn({ navigation }) {
         <Text style={styles.introMessage}>LOGIN</Text>
         <TextInput
           placeholder="email"
-          value={email}
           onChangeText={(text) => {
             setEmail(text);
           }}
         />
         <TextInput
           placeholder="password"
-          value={password}
+          secureTextEntry={true}
           onChangeText={(text) => {
             setPassword(text);
           }}

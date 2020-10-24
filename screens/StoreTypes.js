@@ -25,7 +25,7 @@ export default function storeTypes({ navigation }) {
       }
     }
     retrieveData();
-  }, []);
+  }, [categoryId]);
 
   // fetch store type by categoryId
   const { loading, error, data } = useQuery(STORE_TYPE_BY_CATEGORY_ID, {
@@ -101,7 +101,7 @@ export default function storeTypes({ navigation }) {
               fontWeight: "600",
             }}
           >
-            From what kind of store?
+            Food
           </Text>
           <ScrollView>
             {data.storeTypeByCategoryId.map((store, i) => {

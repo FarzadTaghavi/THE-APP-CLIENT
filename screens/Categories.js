@@ -83,7 +83,7 @@ export default function categories({ navigation }) {
               fontWeight: "600",
             }}
           >
-            What do you need?
+            What can we get you?
           </Text>
           <ScrollView>
             {data.storeCategories.map((category, i) => {
@@ -92,7 +92,7 @@ export default function categories({ navigation }) {
                   key={i}
                   style={{
                     backgroundColor: "#33c37d",
-                    width: 250,
+                    width: width - 20,
                     flexDirection: "row",
                     alignSelf: "center",
                     alignItems: "center",

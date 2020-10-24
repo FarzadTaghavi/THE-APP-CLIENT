@@ -29,7 +29,7 @@ export default function MyOrders({ navigation }) {
       }
     }
     retrieveData();
-  }, []);
+  }, [data]);
 
   if (data) {
     return (
@@ -49,7 +49,7 @@ export default function MyOrders({ navigation }) {
         <View
           style={{
             flex: 6,
-            backgroundColor: "gold",
+            backgroundColor: "white",
             alignItems: "center",
             justifyContent: "flex-start",
           }}
@@ -74,7 +74,7 @@ export default function MyOrders({ navigation }) {
           </ScrollView>
         </View>
 
-        <View style={{ flex: 1.5, backgroundColor: "blue" }}></View>
+        <View style={{ flex: 1.5, backgroundColor: "white" }}></View>
       </View>
     );
   } else {
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     height: 80,
     margin: 10,
     padding: 15,
-    borderWidth: 1,
+    borderWidth: 3,
     justifyContent: "center",
     flexDirection: "column",
     borderColor: "#000",

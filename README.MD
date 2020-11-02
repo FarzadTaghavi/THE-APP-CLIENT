@@ -59,7 +59,7 @@ The goal of this project is to build a full-stack app, practicing known and expl
 
 # Project Board
 
-Go to project board
+Go to [project board]
 
 # Wireframe
 
@@ -73,7 +73,7 @@ Go to datamodel
 
 The backend side of this project is an Express server using Sequelize to manage the underlying Postgres database and GraphQL to communicate with the client. [Click here] for more details
 
-
+[project board]: https://github.com/FarzadTaghavi/THE-APP-CLIENT/projects/1
 [Click here]: https://github.com/FarzadTaghavi/THE-APP-SERVER
 [mockup]: https://wireframepro.mockflow.com/view/M6400d393c162ec72587d0b485a20e69b1602502764628
 [dill]: https://github.com/joemccann/dillinger

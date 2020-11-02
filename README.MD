@@ -63,7 +63,7 @@ Go to [project board]
 
 # Wireframe
 
-[mockup]
+Go to [mockup]
 
 # Datamodel
 

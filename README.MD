@@ -71,9 +71,10 @@ Go to datamodel
 
 # Backend server repo
 
-The backend side of this project is an Express server using Sequelize to manage the underlying Postgres database and GraphQL to communicate with the client. Click here for more details
+The backend side of this project is an Express server using Sequelize to manage the underlying Postgres database and GraphQL to communicate with the client. [Click here] for more details
 
 
+[Click here]: https://github.com/FarzadTaghavi/THE-APP-SERVER
 [mockup]: https://wireframepro.mockflow.com/view/M6400d393c162ec72587d0b485a20e69b1602502764628
 [dill]: https://github.com/joemccann/dillinger
 [git-repo-url]: https://github.com/joemccann/dillinger.git

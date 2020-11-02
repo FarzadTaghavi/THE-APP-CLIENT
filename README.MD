@@ -17,7 +17,7 @@ The main goal of this app is to let you ordor anything you want. From a couple o
 
 # App demo
 
-GIF
+![](demo.gif)
 
 # Used technologies and concepts
 
